@@ -1,0 +1,91 @@
+name: Bug report
+description: Something isn't working — extraction misses a field, the export fails, the popup breaks, etc.
+title: "[Bug] "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting. Before you submit:
+
+        - **Do not paste screenshots that contain other people's Facebook content** (names, comments, profile pictures). Scrub or crop first.
+        - For **security** issues, do not open a public issue — see [SECURITY.md](https://github.com/panibor/Jaspidian/blob/main/SECURITY.md).
+
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: What did you try, what did you expect, what actually happened?
+      placeholder: |
+        I tried...
+        I expected...
+        Instead...
+    validations:
+      required: true
+
+  - type: dropdown
+    id: surface
+    attributes:
+      label: Which Facebook surface?
+      description: Where on Facebook were you when this happened?
+      options:
+        - News feed
+        - Group feed
+        - Group permalink (single-post page)
+        - Page feed
+        - Page post
+        - Profile feed
+        - Profile post
+        - Photo viewer
+        - Permalink.php (?story_fbid=...)
+        - Other / not sure
+    validations:
+      required: true
+
+  - type: input
+    id: url-type
+    attributes:
+      label: URL pattern (optional)
+      description: The shape of the URL that triggered the bug — e.g. `/groups/<id>/permalink/<id>/`. Don't include personal identifiers.
+      placeholder: "/groups/<id>/posts/<id>/"
+
+  - type: input
+    id: chrome-version
+    attributes:
+      label: Browser + version
+      placeholder: "Chrome 134 / Edge 134 / etc."
+    validations:
+      required: true
+
+  - type: input
+    id: obsidian-version
+    attributes:
+      label: Obsidian version
+      placeholder: "1.7.x"
+    validations:
+      required: true
+
+  - type: input
+    id: jaspidian-version
+    attributes:
+      label: Jaspidian version
+      placeholder: "v1.0.0"
+    validations:
+      required: true
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Console logs (optional)
+      description: Open DevTools (F12) on the extension's popup, copy any red errors. Scrub usernames and IDs before pasting.
+      render: shell
+
+  - type: checkboxes
+    id: confirm
+    attributes:
+      label: Pre-submission checks
+      options:
+        - label: I have scrubbed any screenshots/logs of other people's content
+          required: true
+        - label: This is not a security issue (those go through SECURITY.md)
+          required: true

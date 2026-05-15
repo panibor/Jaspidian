@@ -1,0 +1,41 @@
+name: Feature request
+description: Suggest a new capture target, output format, comment-mode option, etc.
+title: "[Feature] "
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Jaspidian is a personal-use tool. Features that primarily enable commercial use,
+        mass collection, or redistribution are out of scope and will be closed —
+        see [CONTRIBUTING.md](https://github.com/panibor/Jaspidian/blob/main/CONTRIBUTING.md).
+
+  - type: textarea
+    id: use-case
+    attributes:
+      label: What would you do with this feature?
+      description: Describe the workflow this would unblock for you personally.
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed behaviour
+      description: What you'd like the extension or plugin to do.
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: Existing workarounds, other tools you've tried, what they're missing.
+
+  - type: checkboxes
+    id: scope
+    attributes:
+      label: Scope check
+      options:
+        - label: This is for personal / hobby / educational / non-profit use
+          required: true
