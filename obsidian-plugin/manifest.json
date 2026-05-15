@@ -1,0 +1,10 @@
+{
+  "id": "jaspidian",
+  "name": "Jaspidian",
+  "version": "1.0.0",
+  "minAppVersion": "1.4.0",
+  "description": "Receives notes from the Jaspidian Chrome extension and saves them directly into this vault.",
+  "author": "Jaspidian",
+  "authorUrl": "https://github.com/panibor/jaspidian",
+  "isDesktopOnly": true
+}
