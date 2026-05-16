@@ -1,4 +1,4 @@
-# Jaspidian — Disclaimer
+# Jaspidian - Disclaimer
 
 Read this before installing or using Jaspidian.
 
@@ -30,7 +30,7 @@ The names "Facebook" and "Obsidian" are used here only to describe the platforms
 
 ## You are responsible for complying with Facebook's terms
 
-Facebook's [Terms of Service](https://www.facebook.com/terms.php) restrict automated data collection. Although Jaspidian only captures content that is **already rendered in your own logged-in browser session** — and does no login automation, no API access, and no access-control bypass — operating any extension that systematically extracts Facebook content may still breach Meta's terms in your jurisdiction.
+Facebook's [Terms of Service](https://www.facebook.com/terms.php) restrict automated data collection. Although Jaspidian only captures content that is **already rendered in your own logged-in browser session** - and does no login automation, no API access, and no access-control bypass - operating any extension that systematically extracts Facebook content may still breach Meta's terms in your jurisdiction.
 
 **You alone are responsible** for deciding whether using Jaspidian is appropriate given:
 
@@ -46,7 +46,7 @@ The Obsidian plugin includes an opt-in "prettify with AI" feature. It is **off b
 
 ## You are responsible for the data you capture
 
-When you scan a Facebook post, Jaspidian captures the post body, comments, commenter names, and image links — all data about real people. Even though everything stays on your computer, you become responsible for that data.
+When you scan a Facebook post, Jaspidian captures the post body, comments, commenter names, and image links - all data about real people. Even though everything stays on your computer, you become responsible for that data.
 
 Use common sense:
 

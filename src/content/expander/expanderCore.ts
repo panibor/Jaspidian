@@ -120,7 +120,7 @@ export async function runExpansion(opts: ExpanderOpts): Promise<ExpansionStatsV2
 
   const localMs = Date.now() - localStartMs;
 
-  // We don't know "category" here — caller will add per-category stats.
+  // We don't know "category" here - caller will add per-category stats.
   // Return aggregate; caller accumulates into the envelope.
   return {
     bodyClicks,

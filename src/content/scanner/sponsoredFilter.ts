@@ -67,7 +67,7 @@ export function isRejectedChrome(el: Element, doc: Document): RejectionResult {
     }
   }
 
-  // 4. Check for composer (text input in first 100px — it's not a post)
+  // 4. Check for composer (text input in first 100px - it's not a post)
   const isComposer = el.matches('[role="dialog"] [role="textbox"]') ||
     (el.querySelector('[role="textbox"]') !== null && el.querySelector('[data-ad-rendering-role="story_message"]') === null);
   if (isComposer) {

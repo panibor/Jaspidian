@@ -47,7 +47,7 @@ export function findViewCommentsButtons(postEl: Element): HTMLElement[] {
 }
 
 /**
- * Find "View replies" buttons — uses both label matching AND aria-expanded="false"
+ * Find "View replies" buttons - uses both label matching AND aria-expanded="false"
  * so it catches dynamically-loaded nested reply sections Facebook adds after first expansion.
  */
 export function findViewRepliesButtons(commentsRoot: Element): HTMLElement[] {

@@ -137,7 +137,7 @@ export interface ExtractedFacebookCommentV2 {
 }
 
 /**
- * Extracted Facebook post — the canonical output of the scanner + extractor pipeline.
+ * Extracted Facebook post - the canonical output of the scanner + extractor pipeline.
  */
 export interface ExtractedFacebookPostV2 {
   id: string;
@@ -204,7 +204,7 @@ export interface ScanDebugReportV2 {
   candidatesCount: number;
   classifiedCount: number;
   rejectionReasons: Record<string, number>;
-  topCandidates?: ClassifiedCandidateV2[];
+  topCandidates?: Omit<ClassifiedCandidateV2, 'el'>[];
 }
 
 export interface CandidateSignalV2 {
@@ -230,7 +230,7 @@ export interface ClassifiedCandidateV2 {
 export interface Env {
   document: Document;
   url: string;
-  htmlLang?: string; // document.documentElement.lang — Facebook's declared page language (BCP 47)
+  htmlLang?: string; // document.documentElement.lang - Facebook's declared page language (BCP 47)
   now: () => string; // ISO timestamp
   fetch: typeof fetch;
   /**
@@ -246,8 +246,6 @@ export interface Env {
   };
 }
 
-export type Result<T> = { ok: true; value: T } | { ok: false; error: string };
-
 // HTTP message types
 export interface RuntimeMessageV2 {
   v: 2;
@@ -257,7 +255,7 @@ export interface RuntimeMessageV2 {
 export interface ScanResponse {
   ok: boolean;
   envelope?: ScanEnvelopeV2;
-  /** The tab ID that was scanned — included so the popup can pass it back at export time. */
+  /** The tab ID that was scanned - included so the popup can pass it back at export time. */
   tabId?: number;
   error?: string;
 }
@@ -286,10 +284,54 @@ export interface ExpandAndExtractResponse {
   error?: string;
 }
 
-export interface ExportResponse {
-  ok: boolean;
-  results: ExportResultItemV2[];
+/** Per-post result row tracked across the popup and background. */
+export interface ExportResultRow {
+  postId: string;
+  title: string;
+  status: 'ok' | 'skipped' | 'failed';
+  notePath?: string;
   error?: string;
+  warnings: string[];
+}
+
+/**
+ * Background-owned state for an in-flight or just-finished batch export job.
+ * Persisted to chrome.storage.session so the popup can rejoin a running job.
+ */
+export interface ExportJobState {
+  status: 'running' | 'done';
+  total: number;
+  completed: number;
+  currentTitle: string;
+  /** Post IDs still to process. Empty when status is 'done'. */
+  remaining: string[];
+  results: ExportResultRow[];
+  /** ISO timestamp of the last state mutation. Lets the popup detect stale "running" state. */
+  updatedAt: string;
+}
+
+export interface ExportBatchStartRequest extends RuntimeMessageV2 {
+  posts: ExtractedFacebookPostV2[];
+  postIds: string[];
+  commentMode: CommentMode;
+  vaultPattern: string;
+  pluginToken?: string;
+}
+
+export interface ExportBatchStartResponse {
+  ok: boolean;
+  error?: string;
+  /** Returned when a job is already running so the popup can rejoin without starting another. */
+  alreadyRunning?: boolean;
+}
+
+export interface ExportBatchStatusResponse {
+  ok: boolean;
+  job: ExportJobState | null;
+}
+
+export interface ExportProgressMessage extends RuntimeMessageV2 {
+  job: ExportJobState;
 }
 
 export interface ExportResultItemV2 {

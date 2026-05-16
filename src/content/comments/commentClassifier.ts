@@ -32,7 +32,7 @@ export function markOPAnswers(
   const warnings: string[] = [];
   if (total >= 5 && opCount === 0) {
     warnings.push(
-      `walkComments: ${total} comments but 0 identified as OP — possible author mismatch`
+      `walkComments: ${total} comments but 0 identified as OP - possible author mismatch`
     );
   }
 

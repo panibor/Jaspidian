@@ -1,4 +1,4 @@
-# Jaspidian — Installation Guide
+# Jaspidian - Installation Guide
 
 Save Facebook posts directly into your Obsidian vault, complete with images, the author, which group it came from, and the comments.
 
@@ -8,14 +8,16 @@ Save Facebook posts directly into your Obsidian vault, complete with images, the
 
 ## What you need
 
-- [Google Chrome](https://www.google.com/chrome/) or Microsoft Edge
+- A supported browser:
+  - [Google Chrome](https://www.google.com/chrome/) or Microsoft Edge, **or**
+  - [Mozilla Firefox](https://www.mozilla.org/firefox/) 142 or newer
 - [Obsidian](https://obsidian.md/) (desktop, v1.4+), with a vault you use
 
-That's it — no Node.js, no helper apps, no background processes to remember to start.
+That's it - no Node.js, no helper apps, no background processes to remember to start.
 
 ---
 
-## Step 1 — Install the Obsidian plugin
+## Step 1 - Install the Obsidian plugin
 
 The plugin is what actually writes notes into your vault. It also starts a small loopback listener inside Obsidian on `127.0.0.1:37123` that the browser extension talks to. Nothing is exposed to the internet.
 
@@ -36,18 +38,31 @@ When the plugin is enabled, you'll see a small notice in Obsidian: "Jaspidian li
 
 ---
 
-## Step 2 — Install the browser extension
+## Step 2 - Install the browser extension
 
-1. Unzip `jaspidian-extension-v1.0.0.zip` somewhere you won't accidentally delete it (e.g. `C:\Tools\jaspidian-extension`).
+Follow **2a** for Chrome or Edge, or **2b** for Firefox.
+
+### 2a - Chrome / Edge
+
+1. Unzip `jaspidian-extension-vX.Y.Z.zip` (from the release zip) somewhere you won't accidentally delete it (e.g. `C:\Tools\jaspidian-extension`).
 2. Open Chrome (or Edge) and go to **`chrome://extensions/`** (or `edge://extensions/`).
 3. Turn on **Developer mode** (top-right toggle).
 4. Click **"Load unpacked"**.
 5. Select the folder you unzipped in step 1.
 6. Click the **puzzle-piece icon** (🧩) in the toolbar, find **"Jaspidian"**, and click the **pin icon** so it stays visible.
 
+### 2b - Firefox (142 or newer)
+
+The Firefox build ships as an `.xpi` file (`jaspidian-firefox-vX.Y.Z.xpi`) that has been **signed by Mozilla**. Drag-install it once and it persists across restarts:
+
+1. Open Firefox.
+2. Drag `jaspidian-firefox-vX.Y.Z.xpi` onto any Firefox window.
+3. Approve the install prompt.
+4. Pin the toolbar icon: right-click the toolbar → **Customize toolbar** → drag the Jaspidian icon into place.
+
 ---
 
-## Step 3 — Use it
+## Step 3 - Use it
 
 1. Open **Facebook** in your browser and scroll to a post you want to save.
 2. Click the **Jaspidian** icon in the toolbar.
@@ -55,11 +70,11 @@ When the plugin is enabled, you'll see a small notice in Obsidian: "Jaspidian li
 4. Click **"Scan this page"**.
 5. Uncheck any posts you don't want.
 6. Pick a **comment mode**:
-   - **OP answered** *(default)* — only comment threads where the original poster replied
-   - **OP only** — only comments from the original poster
-   - **All** — every visible comment
+   - **OP answered** *(default)* - only comment threads where the original poster replied
+   - **OP only** - only comments from the original poster
+   - **All** - every visible comment
 7. Click **"Export selected"**.
-8. Switch back to Obsidian — your notes are in the **Facebook** folder, organised by year and group.
+8. Switch back to Obsidian - your notes are in the **Facebook** folder, organised by year and group.
 
 ---
 
@@ -93,6 +108,9 @@ You can change the folder pattern in the extension's **Options** page (⚙ in th
 **The extension disappeared from Chrome**
 > Chrome occasionally disables developer-mode extensions. Go to `chrome://extensions/` and re-enable it.
 
+**The extension disappeared from Firefox after restart**
+> Temporary add-ons are removed when Firefox restarts. Reload it via `about:debugging#/runtime/this-firefox` → "Load Temporary Add-on…". This is unavoidable until an AMO-signed build is available.
+
 **Need to use a bearer token?**
 > The Jaspidian plugin can require a token if you want extra protection on the loopback port. In the plugin's settings inside Obsidian, set a token. Then in the extension's Options page, paste the same token in the "Obsidian plugin auth token" field.
 
@@ -104,5 +122,5 @@ When a new version is released:
 
 1. Replace `main.js` and `manifest.json` in `<vault>/.obsidian/plugins/jaspidian/` with the new versions
 2. Replace the contents of your browser-extension folder with the new build
-3. In `chrome://extensions/`, find Jaspidian and click the **refresh icon** (↺)
+3. In `chrome://extensions/` (or `about:debugging#/runtime/this-firefox`), find Jaspidian and click the **refresh icon** (↺ on Chrome, **Reload** on Firefox)
 4. Restart Obsidian to reload the plugin

@@ -14,8 +14,8 @@ import { extractImages } from './extractImages';
 export function extractSharedPost(postEl: Element): SharedPostV2 | undefined {
   // Detection: nested [role="article"] that is a *real* shared post, not a
   // comment. Facebook marks every comment with role="article" too, so we have
-  // to identify the shared post by its story-message body marker — the same
-  // marker the top-level post carries — and explicitly reject anything that
+  // to identify the shared post by its story-message body marker - the same
+  // marker the top-level post carries - and explicitly reject anything that
   // looks like a comment (matching the exclusion in commentWalker).
   for (const nested of postEl.querySelectorAll('[role="article"]')) {
     if (nested === postEl) continue;
@@ -51,7 +51,7 @@ export function extractSharedPost(postEl: Element): SharedPostV2 | undefined {
  * starts with "Comment by …" / "תגובה של …".
  */
 function _isSharedPostArticle(el: Element): boolean {
-  // Comments self-identify via aria-label — bail immediately if so.
+  // Comments self-identify via aria-label - bail immediately if so.
   const ariaLabel = (el.getAttribute('aria-label') || '').toLowerCase();
   if (
     ariaLabel.startsWith('comment by') ||
@@ -92,7 +92,7 @@ function _extractFromElement(el: Element): SharedPostV2 {
   if (bodyEl) {
     body = (bodyEl.textContent || '').trim().slice(0, 2000) || undefined;
   } else {
-    // Fallback: same [dir="auto"] heuristic as extractBody —
+    // Fallback: same [dir="auto"] heuristic as extractBody -
     // pick the first element that is not inside an anchor, has enough text,
     // and doesn't look like a timestamp / engagement counter.
     const TIMESTAMP_RE =

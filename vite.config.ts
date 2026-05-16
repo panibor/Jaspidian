@@ -1,11 +1,9 @@
 import { defineConfig } from 'vite';
-import react from '@vitejs/plugin-react';
 import { resolve } from 'node:path';
 import { copyFileSync, mkdirSync, readdirSync } from 'node:fs';
 
 // Chrome extension popups can fail to load when Vite adds crossorigin=""
-// to <script type="module"> and <link rel="modulepreload"> tags.
-// Strip them from every HTML output file.
+// to <script type="module"> and <link rel="modulepreload"> tags. Strip them.
 function stripCrossoriginPlugin() {
   return {
     name: 'strip-crossorigin',
@@ -23,10 +21,8 @@ function copyStaticPlugin() {
       const assetsDir = resolve(__dirname, 'dist/assets');
       mkdirSync(assetsDir, { recursive: true });
 
-      // manifest.json
       copyFileSync(resolve(__dirname, 'public/manifest.json'), resolve(distDir, 'manifest.json'));
 
-      // icons (logo_*.png)
       const pubAssets = resolve(__dirname, 'public/assets');
       for (const file of readdirSync(pubAssets)) {
         copyFileSync(resolve(pubAssets, file), resolve(assetsDir, file));
@@ -36,7 +32,7 @@ function copyStaticPlugin() {
 }
 
 export default defineConfig({
-  plugins: [react(), stripCrossoriginPlugin(), copyStaticPlugin()],
+  plugins: [stripCrossoriginPlugin(), copyStaticPlugin()],
   publicDir: false,
   build: {
     outDir: 'dist',

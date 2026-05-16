@@ -21,7 +21,7 @@ export function extractBody(postEl: Element): BodyInfo {
   const TIMESTAMP_RE =
     /^[\u200e\u200f\s]*\d+\s*(שעות?|דקות?|ימים|יום|שבועות?|חודשים?|hours?|hr?s?|mins?|minutes?|days?|wks?|weeks?|months?)/i;
 
-  // Find message root — try modern data-ad-rendering-role first (confirmed 2026-05-09),
+  // Find message root - try modern data-ad-rendering-role first (confirmed 2026-05-09),
   // then legacy data-ad-comet-preview, then data-ad-preview.
   let messageRoot: Element | null =
     postEl.querySelector('[data-ad-rendering-role="story_message"]') ||
@@ -30,7 +30,7 @@ export function extractBody(postEl: Element): BodyInfo {
 
   if (!messageRoot) {
     // Fallback A: first [dir='auto'] sibling after the header element.
-    // Validate it's not a timestamp — if it is, fall through to Fallback B.
+    // Validate it's not a timestamp - if it is, fall through to Fallback B.
     const header = postEl.querySelector('header, h2, h3, h4, h5');
     if (header) {
       const afterHeader = header.nextElementSibling;
@@ -45,7 +45,7 @@ export function extractBody(postEl: Element): BodyInfo {
   }
 
   if (!messageRoot) {
-    // Fallback B: photo-viewer / permalink layout — no data-ad-* attrs or Fallback A got a
+    // Fallback B: photo-viewer / permalink layout - no data-ad-* attrs or Fallback A got a
     // timestamp element. Walk every [dir="auto"] in the post and pick the first one that is:
     //   • not inside a hyperlink (author name links are always wrapped in <a>)
     //   • not inside a nested [role="article"] (those are comments, not the post body)
@@ -83,7 +83,7 @@ export function extractBody(postEl: Element): BodyInfo {
         // Skip expansion controls ("See more" / "See less" / "Show more" etc.).
         // Facebook sets aria-expanded on truncation buttons in every language.
         if (el.hasAttribute('aria-expanded')) return NodeFilter.FILTER_REJECT;
-        // Also skip any generic button/role="button" — their labels should never
+        // Also skip any generic button/role="button" - their labels should never
         // appear in the post body (catches cases where aria-expanded is absent).
         if (el.tagName === 'BUTTON' || el.getAttribute('role') === 'button') {
           return NodeFilter.FILTER_REJECT;

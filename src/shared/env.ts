@@ -3,14 +3,11 @@
  * Concrete browser environment implementation.
  */
 import type { Env } from './types';
-import { createLogger } from './log';
 
 /**
  * Create a concrete browser environment (uses window, document, fetch, MutationObserver).
  */
 export function createBrowserEnv(): Env {
-  const log = createLogger('env');
-
   return {
     document,
     url: window.location.href,
@@ -56,6 +53,10 @@ export function createBrowserEnv(): Env {
         checkQuiet();
       });
     },
-    log,
+    log: {
+      debug: (...args) => console.debug('[jaspidian]', ...args),
+      warn: (...args) => console.warn('[jaspidian]', ...args),
+      error: (...args) => console.error('[jaspidian]', ...args),
+    },
   };
 }

@@ -146,7 +146,7 @@ function _extractComment(el: Element, postEl: Element, depth: number): Extracted
 
   // Strategy 2 (fallback): first <a role="link"> with text that is NOT a
   // post/permalink URL.  Facebook puts comment_id= on ALL links (including profile
-  // ones) so we must NOT filter by that — instead exclude by path patterns.
+  // ones) so we must NOT filter by that - instead exclude by path patterns.
   if (!authorName) {
     const allLinks = [...el.querySelectorAll('a[role="link"]')].filter(
       (a) => (a.textContent || '').trim().length > 0
@@ -181,7 +181,7 @@ function _extractComment(el: Element, postEl: Element, depth: number): Extracted
   if (!authorName) authorName = 'Unknown';
 
   // ── Image attached to comment ─────────────────────────────────────────────
-  // Check BEFORE cloning — look for a content image (not avatar, not emoji).
+  // Check BEFORE cloning - look for a content image (not avatar, not emoji).
   let imageUrl: string | undefined;
   for (const img of el.querySelectorAll('img[src]')) {
     const src = img.getAttribute('src') || '';

@@ -3,8 +3,8 @@
  * Content script entry point for the v2 extension.
  *
  * Two message kinds are handled here:
- *   SCAN_REQUEST             — quick scan (no DOM clicks), returns post list
- *   EXPAND_AND_EXTRACT_REQUEST — expand stored posts and return full data
+ *   SCAN_REQUEST             - quick scan (no DOM clicks), returns post list
+ *   EXPAND_AND_EXTRACT_REQUEST - expand stored posts and return full data
  */
 import { scan, expandAndExtractPosts } from './scanner/pipeline';
 import { openAndScanViaModal } from './modalScanner';
@@ -56,7 +56,7 @@ function init(): void {
 
           scan(env, opts)
             .then(({ envelope, elementMap }) => {
-              // Refresh element store — clear stale refs from a previous scan
+              // Refresh element store - clear stale refs from a previous scan
               _postElementStore.clear();
               for (const [postId, el] of elementMap) {
                 _postElementStore.set(postId, new WeakRef(el));
@@ -96,7 +96,7 @@ function init(): void {
 
           // Check if any stored element refs have gone stale.
           // This happens when Facebook re-renders its photo viewer / dialog between
-          // scan and export — the element is replaced in the DOM even though the user
+          // scan and export - the element is replaced in the DOM even though the user
           // never left the page.
           const anyStale = postIds.some((id) => {
             const el = _postElementStore.get(id)?.deref();
@@ -109,7 +109,7 @@ function init(): void {
               expand: { body: false, comments: false, replies: false },
               commentMode,
             });
-            // Merge fresh refs into the store — do NOT clear, in case other posts are still valid.
+            // Merge fresh refs into the store - do NOT clear, in case other posts are still valid.
             for (const [postId, el] of elementMap) {
               _postElementStore.set(postId, new WeakRef(el));
             }

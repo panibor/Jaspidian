@@ -3,11 +3,22 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Facebook to Obsidian</title>
-    <style>body { margin: 0; min-width: 340px; }</style>
+    <title>Jaspidian</title>
+    <style>
+      html, body { margin: 0; background: #150202; min-width: 340px; }
+      @media (prefers-color-scheme: light) { html, body { background: #f5f5f5; } }
+      @keyframes jaspidian-spin { to { transform: rotate(360deg); } }
+      .jaspidian-spinner {
+        width: 18px; height: 18px;
+        border: 2px solid rgba(200, 50, 0, 0.2);
+        border-top-color: #C91200; border-radius: 50%;
+        animation: jaspidian-spin .7s linear infinite; margin: 0 auto;
+      }
+      .jaspidian-pulse { animation: jaspidian-spin 1.2s linear infinite; border-top-color: #FF2E12; }
+    </style>
   </head>
   <body>
     <div id="root"></div>
-    <script type="module" src="/src/popup/index.tsx"></script>
+    <script type="module" src="/src/popup/index.ts"></script>
   </body>
 </html>

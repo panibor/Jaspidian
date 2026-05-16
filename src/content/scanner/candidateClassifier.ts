@@ -107,7 +107,7 @@ export function classify(c: Candidate, doc: Document): ClassifiedCandidateV2 {
   if (totalScore >= 5) {
     kind = 'postRoot';
   } else if (totalScore > 0) {
-    kind = 'postRoot'; // Marginal — still accept, scorer will filter
+    kind = 'postRoot'; // Marginal - still accept, scorer will filter
   } else {
     kind = 'feedChrome';
   }

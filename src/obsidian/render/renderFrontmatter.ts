@@ -1,6 +1,6 @@
 /**
  * src-v2/obsidian/render/renderFrontmatter.ts
- * Renders clean YAML frontmatter — only fields with meaningful values.
+ * Renders clean YAML frontmatter - only fields with meaningful values.
  */
 import type { ExtractedFacebookPostV2 } from '../../shared/types';
 import type { RenderOptions } from './renderNote';
@@ -16,13 +16,13 @@ export function renderFrontmatter(post: ExtractedFacebookPostV2, _opts: RenderOp
 
   field('title', post.title || 'Untitled Post');
 
-  // Author — embed the link directly so Obsidian's properties panel shows
+  // Author - embed the link directly so Obsidian's properties panel shows
   // it as a clickable name. No separate author_url row.
   field('author', _renderAuthorish(post.authorName, post.authorUrl));
 
   field('permalink', post.permalink ? cleanFacebookUrl(post.permalink) : undefined);
 
-  // Context — only emit the kind that applies. Same link-embedded shape.
+  // Context - only emit the kind that applies. Same link-embedded shape.
   const ctx = post.context;
   if (ctx.kind === 'group') {
     field('group', _renderAuthorish(ctx.groupName, ctx.groupUrl));
@@ -32,7 +32,7 @@ export function renderFrontmatter(post: ExtractedFacebookPostV2, _opts: RenderOp
     field('profile', _renderAuthorish(ctx.profileName, ctx.profileUrl));
   }
 
-  // Date — only emit when it came from the post's own timestamp. We
+  // Date - only emit when it came from the post's own timestamp. We
   // deliberately do NOT fall back to the capture time, so the user can tell
   // the difference between "we know when this was posted" and "we don't."
   if (post.postedAt && post.postedAtIsActual) {
@@ -40,7 +40,7 @@ export function renderFrontmatter(post: ExtractedFacebookPostV2, _opts: RenderOp
     field('date', date);
   }
 
-  // Tags — only if non-empty
+  // Tags - only if non-empty
   const tags = post.hashtags || [];
   if (tags.length > 0) {
     lines.push('tags:');

@@ -1,12 +1,12 @@
 <p align="center">
-  <img src="assets/banner.jpg" alt="Jaspidian — Import posts into Obsidian as Markdown" width="900">
+  <img src="assets/banner.jpg" alt="Jaspidian - Import posts into Obsidian as Markdown" width="900">
 </p>
 
 # Jaspidian
 
-Save Facebook posts you can see in your browser straight into your Obsidian vault as Markdown notes — with author, group context, comments, and images.
+Save Facebook posts you can see in your browser straight into your Obsidian vault as Markdown notes - with author, group context, comments, and images.
 
-Jaspidian is a Chrome / Edge extension paired with an Obsidian plugin. It only ever touches content you are already viewing in your own logged-in Facebook session. It does not log in for you, does not bypass anything, and does not see any post you cannot see yourself.
+Jaspidian is a Chrome / Edge / Firefox extension paired with an Obsidian plugin. It only ever touches content you are already viewing in your own logged-in Facebook session. It does not log in for you, does not bypass anything, and does not see any post you cannot see yourself.
 
 ---
 
@@ -22,10 +22,10 @@ Jaspidian is a Chrome / Edge extension paired with an Obsidian plugin. It only e
 
 | Piece | Where it runs | What it does |
 |---|---|---|
-| **Browser extension** | Chrome / Edge | Reads the visible Facebook page, builds the note |
+| **Browser extension** | Chrome / Edge / Firefox (142+) | Reads the visible Facebook page, builds the note |
 | **Obsidian plugin** | Inside Obsidian | Listens on `127.0.0.1:37123` and writes the note to disk |
 
-Both pieces are installed locally. They talk to each other on loopback only — nothing leaves your machine.
+Both pieces are installed locally. They talk to each other on loopback only - nothing leaves your machine.
 
 ## What it does
 
@@ -60,10 +60,18 @@ The Obsidian plugin includes an **optional, off-by-default "prettify with AI"** 
 Requires Node.js 20+.
 
 ```powershell
-# Browser extension
+# Browser extension - Chrome / Edge
 npm install
 npm run build
 # → produces dist/  (load as an unpacked extension in chrome://extensions/)
+
+# Browser extension - Firefox (optional, requires Firefox 142+)
+npm run build:firefox
+# → produces dist-firefox/  and  dist-firefox/jaspidian-firefox-v<version>.xpi
+# That XPI is unsigned and only loads as a temporary add-on via about:debugging.
+# For a permanent install, submit it to AMO and download the signed XPI
+# (self-distribution channel), then drop it into release/ -
+# `npm run release` detects the Mozilla signature and bundles it for end users.
 
 # Obsidian plugin
 cd obsidian-plugin
@@ -90,8 +98,8 @@ obsidian-plugin/         Obsidian plugin source + build
 
 ## Contributing
 
-Issues and pull requests are welcome. See [CONTRIBUTING.md](CONTRIBUTING.md) for ground rules — including that contributions are accepted under the same PolyForm Noncommercial 1.0.0 licence as the rest of the project.
+Issues and pull requests are welcome. See [CONTRIBUTING.md](CONTRIBUTING.md) for ground rules - including that contributions are accepted under the same PolyForm Noncommercial 1.0.0 licence as the rest of the project.
 
 ## License
 
-PolyForm Noncommercial 1.0.0 — see [LICENSE](LICENSE).
+PolyForm Noncommercial 1.0.0 - see [LICENSE](LICENSE).

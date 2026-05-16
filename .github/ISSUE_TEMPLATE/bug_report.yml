@@ -1,5 +1,5 @@
 name: Bug report
-description: Something isn't working — extraction misses a field, the export fails, the popup breaks, etc.
+description: Something isn't working - extraction misses a field, the export fails, the popup breaks, etc.
 title: "[Bug] "
 labels: ["bug"]
 body:
@@ -9,7 +9,7 @@ body:
         Thanks for reporting. Before you submit:
 
         - **Do not paste screenshots that contain other people's Facebook content** (names, comments, profile pictures). Scrub or crop first.
-        - For **security** issues, do not open a public issue — see [SECURITY.md](https://github.com/panibor/Jaspidian/blob/main/SECURITY.md).
+        - For **security** issues, do not open a public issue - see [SECURITY.md](https://github.com/panibor/Jaspidian/blob/main/SECURITY.md).
 
   - type: textarea
     id: what-happened
@@ -46,7 +46,7 @@ body:
     id: url-type
     attributes:
       label: URL pattern (optional)
-      description: The shape of the URL that triggered the bug — e.g. `/groups/<id>/permalink/<id>/`. Don't include personal identifiers.
+      description: The shape of the URL that triggered the bug - e.g. `/groups/<id>/permalink/<id>/`. Don't include personal identifiers.
       placeholder: "/groups/<id>/posts/<id>/"
 
   - type: input

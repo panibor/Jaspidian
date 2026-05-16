@@ -32,7 +32,7 @@ export function extractAuthor(
   // Strategy 1: profile_name container
   const profileNameEl = postEl.querySelector('[data-ad-rendering-role="profile_name"]');
   if (profileNameEl) {
-    // Anonymous group posts — never fall through to Strategy 2 (which would grab a commenter)
+    // Anonymous group posts - never fall through to Strategy 2 (which would grab a commenter)
     const pnText = (profileNameEl.textContent || '').toLowerCase();
     if (pnText.includes('anonymous') || pnText.includes('אנונימי')) {
       return {};
@@ -71,7 +71,7 @@ export function extractAuthor(
       }
 
       // profile_name exists but only has group/context links (group permalink wrapper pattern).
-      // The actual author link lives just outside profile_name — look for the first
+      // The actual author link lives just outside profile_name - look for the first
       // /groups/.../user/... link in the post subtree that isn't inside profile_name.
       for (const link of postEl.querySelectorAll<HTMLElement>('a[role="link"]')) {
         if (profileNameEl.contains(link)) continue;
@@ -88,11 +88,11 @@ export function extractAuthor(
       }
     }
 
-    // profile_name exists but no identifiable author link — truly anonymous / page admin
+    // profile_name exists but no identifiable author link - truly anonymous / page admin
     return {};
   }
 
-  // Strategy 2: no profile_name at all — scan the post HEADER only (first child) to avoid
+  // Strategy 2: no profile_name at all - scan the post HEADER only (first child) to avoid
   // picking up commenter names from the comment section.
   const headerEl = postEl.firstElementChild || postEl;
   const headerLinks = [...headerEl.querySelectorAll('a[role="link"]')].slice(0, 12);
@@ -110,7 +110,7 @@ export function extractAuthor(
     }
   }
 
-  // Pass 2: profile slugs and profile.php links — any link that isn't a group/page/action URL
+  // Pass 2: profile slugs and profile.php links - any link that isn't a group/page/action URL
   const SKIP_PATTERNS = ['/groups/', '/pages/', '/events/', '/photo/', '/posts/',
     '/permalink', '/story.php', '/reel/', 'multi_permalink', '?__cft__', '?comment_id='];
   for (const link of headerLinks) {

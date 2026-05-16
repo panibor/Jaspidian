@@ -17,7 +17,7 @@ Open a GitHub issue with:
 - What you tried
 - What you expected
 - What actually happened
-- Which Facebook surface was involved — feed, group feed, group permalink, page post, profile post, photo viewer, etc.
+- Which Facebook surface was involved - feed, group feed, group permalink, page post, profile post, photo viewer, etc.
 - Operating system + browser version
 - Obsidian version
 
@@ -25,14 +25,14 @@ Open a GitHub issue with:
 
 ## Proposing features
 
-Open an issue first. Describe the use case (personal / hobby — see scope above). If the change is more than a small fix, please wait for a thumbs-up before writing the code so we can agree on the approach.
+Open an issue first. Describe the use case (personal / hobby - see scope above). If the change is more than a small fix, please wait for a thumbs-up before writing the code so we can agree on the approach.
 
 ## Pull requests
 
 Before opening a PR:
 
 1. `npm install`
-2. `npm run build` — confirm the extension builds without errors
+2. `npm run build` - confirm the extension builds without errors
 3. Reload the unpacked extension in `chrome://extensions/`
 4. Manually exercise the flow your change touches: scan a real Facebook tab, export to a real vault, check the resulting Markdown
 5. If you touched the Obsidian plugin: `cd obsidian-plugin && npm install && npm run build`, then reload Obsidian and reproduce the flow
@@ -48,4 +48,4 @@ Keep PRs small. One feature or fix per PR.
 
 ## Security
 
-If you find a security issue — a way to make the extension read content from outside Facebook, a way to make the plugin write outside the vault, an unauthenticated network call, anything that could leak personal data — please open an issue with the label "security" rather than a public PR with the fix. We can co-ordinate the patch and the disclosure.
+If you find a security issue - a way to make the extension read content from outside Facebook, a way to make the plugin write outside the vault, an unauthenticated network call, anything that could leak personal data - please open an issue with the label "security" rather than a public PR with the fix. We can co-ordinate the patch and the disclosure.

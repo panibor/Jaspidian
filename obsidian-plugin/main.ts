@@ -14,7 +14,7 @@ interface FBPluginSettings {
   openrouterModel: string;
   ollamaUrl: string;
   ollamaModel: string;
-  ollamaApiKey: string;   // optional — for remote/cloud Ollama instances that require auth
+  ollamaApiKey: string;   // optional - for remote/cloud Ollama instances that require auth
   ollamaFormat: 'native' | 'openai'; // native = /api/chat, openai = /v1/chat/completions
   autoPrettify: boolean;
 }
@@ -60,7 +60,7 @@ interface BatchRequest {
 }
 
 // ---------------------------------------------------------------------------
-// AI Prettify — system prompt + API callers
+// AI Prettify - system prompt + API callers
 // ---------------------------------------------------------------------------
 
 const PRETTIFY_SYSTEM_PROMPT = `You are a formatter for Facebook posts saved as Obsidian notes.
@@ -72,17 +72,17 @@ Transform the raw captured note into a clean, structured, beautiful Obsidian not
 
 The English templates below are shown with English labels. If the target language is English, use the labels VERBATIM. If the target language is anything else, TRANSLATE only the English label words shown in the templates (Source, Posted by, Group, Page, Date, Link, "Open the post on Facebook", Summary, Media, Comments, "No comments on this post.", Product, Details, Price) into natural {LANG_NAME}. Do NOT change Markdown punctuation, Obsidian callout syntax, the \`>\` prefix on callout lines, the \`**bold**\` markup, frontmatter keys, URLs, dates, or numbers.
 
-Never translate the post body itself — preserve the author's original wording exactly.
+Never translate the post body itself - preserve the author's original wording exactly.
 
-Never emit literal placeholder text like \`{Source}\` or \`{LANG_NAME}\` in the output — those are meta-references inside this prompt, not output tokens.
+Never emit literal placeholder text like \`{Source}\` or \`{LANG_NAME}\` in the output - those are meta-references inside this prompt, not output tokens.
 
 ## Transformation rules
 
 ### Frontmatter
 - Keep these existing fields exactly as they appear: title, author, permalink, group, page, profile, date.
-- The \`author\`, \`group\`, \`page\`, and \`profile\` fields are already markdown links in the form \`[Name](url)\` — preserve them verbatim. Do not split them into separate \`*_url\` fields.
+- The \`author\`, \`group\`, \`page\`, and \`profile\` fields are already markdown links in the form \`[Name](url)\` - preserve them verbatim. Do not split them into separate \`*_url\` fields.
 - Add \`source: "Facebook"\` if not present.
-- Do NOT add \`type\`, \`lang\`, \`language\`, \`author_url\`, \`group_url\`, \`page_url\`, \`profile_url\`, \`cssclasses\` — these fields must not appear in the output frontmatter.
+- Do NOT add \`type\`, \`lang\`, \`language\`, \`author_url\`, \`group_url\`, \`page_url\`, \`profile_url\`, \`cssclasses\` - these fields must not appear in the output frontmatter.
 - Infer and add if present: location, status (in {LANG_NAME})
 - For \`tags\`: replace any existing tags (or add if absent) with 4–8 relevant lowercase tags in {LANG_NAME} (hyphens between words, no spaces, no emoji). Use YAML list format:
 \`\`\`
@@ -93,7 +93,7 @@ tags:
 - Strip tracking params from ALL urls (__cft__[...], __tn__=..., hoisted_section_header_type=...)
 
 ### Source callout
-Replace the raw "*Posted by [Name](url) in [Group](url) · time · [link](url)*" line with a callout. The English template — EVERY line MUST begin with \`> \` exactly:
+Replace the raw "*Posted by [Name](url) in [Group](url) · time · [link](url)*" line with a callout. The English template - EVERY line MUST begin with \`> \` exactly:
 \`\`\`
 > [!info] Source
 > **Posted by:** [Name](clean_url)
@@ -104,7 +104,7 @@ Replace the raw "*Posted by [Name](url) in [Group](url) · time · [link](url)*"
 Use "Group" if the post is in a group, "Page" if on a page, "Profile" if on a personal profile. The Posted-by name and URL come from the \`author\` frontmatter field (which is already a \`[Name](url)\` markdown link). Translate the English label words to {LANG_NAME} when {LANG_NAME} is not English.
 
 ### Summary
-Immediately after the source callout, add a Summary section with a [!summary] callout listing 3–6 key facts (who/what/where/price range/etc.). English template — every line MUST begin with \`> \`:
+Immediately after the source callout, add a Summary section with a [!summary] callout listing 3–6 key facts (who/what/where/price range/etc.). English template - every line MUST begin with \`> \`:
 \`\`\`
 ## Summary
 
@@ -113,18 +113,18 @@ Immediately after the source callout, add a Summary section with a [!summary] ca
 > - Key fact two
 > - Key fact three
 \`\`\`
-Translate "Summary" (used twice — heading and callout title) and the bullet contents to {LANG_NAME} when {LANG_NAME} is not English.
+Translate "Summary" (used twice - heading and callout title) and the bullet contents to {LANG_NAME} when {LANG_NAME} is not English.
 
 ### Content structure
-- Remove the raw "## Post" heading — the content follows naturally after the Summary section
+- Remove the raw "## Post" heading - the content follows naturally after the Summary section
 - Convert unordered item/price lists into clean markdown tables. English column headers: Product / Details / Price. Price column always right-aligned (---:). Keep prices in the post's original currency and format.
 - Split long product lists into logical ### sub-headings
 - Preserve all text; do not summarise or omit product details
 
 ### Sections
 - \`## Media\` keeps that heading in English when {LANG_NAME} is English; translate "Media" otherwise.
-- \`## Comments\` likewise — keep "Comments" in English when {LANG_NAME} is English, translate otherwise. If the section is empty, write a single line below it: \`No comments on this post.\` (translated to {LANG_NAME} when not English).
-- Keep every image embed exactly as-is, with a blank line between each image. This includes both \`![[Facebook/_attachments/...]]\` Obsidian wikilinks and \`![alt](url)\` standard markdown embeds — preserve the form, the alt text, and the URL verbatim. Never strip the leading \`!\`, never replace a URL with a placeholder, never convert one form into the other.
+- \`## Comments\` likewise - keep "Comments" in English when {LANG_NAME} is English, translate otherwise. If the section is empty, write a single line below it: \`No comments on this post.\` (translated to {LANG_NAME} when not English).
+- Keep every image embed exactly as-is, with a blank line between each image. This includes both \`![[Facebook/_attachments/...]]\` Obsidian wikilinks and \`![alt](url)\` standard markdown embeds - preserve the form, the alt text, and the URL verbatim. Never strip the leading \`!\`, never replace a URL with a placeholder, never convert one form into the other.
 
 ### Comment callouts (preserving structure)
 Comments arrive as one Obsidian callout each. The exact syntax that MUST be preserved on every comment header line:
@@ -136,7 +136,7 @@ Comments arrive as one Obsidian callout each. The exact syntax that MUST be pres
 Rules:
 - \`[!note]+\` is a single token: there is NO space between \`]\` and \`+\`. Never write \`[!note] +\`.
 - Every line of the callout (header AND body lines) MUST start with \`> \`. Do not strip the \`>\` prefix.
-- Do not translate or rewrite comment body text — keep it verbatim.
+- Do not translate or rewrite comment body text - keep it verbatim.
 - Replies use \`[!example]+ ↳ \` with one extra \`> \` of nesting per depth.
 
 ### Output
@@ -160,7 +160,7 @@ function _stripFrontmatter(content: string): string {
 
 /**
  * Detect the post body's language from the dominant non-Latin script.
- * Falls back to "en" — the AI will treat any Latin-script content as English
+ * Falls back to "en" - the AI will treat any Latin-script content as English
  * unless the body is clearly another script, which matches the existing
  * scanner-side behaviour for posts where script detection is inconclusive.
  */
@@ -428,7 +428,7 @@ export default class JaspidianPlugin extends Plugin {
       this._serverStatus = 'error';
       const msg = err.code === 'EADDRINUSE'
         ? `Jaspidian: Port ${port} is in use. Change the port in plugin settings.`
-        : `Jaspidian: Server error — ${err.message}`;
+        : `Jaspidian: Server error - ${err.message}`;
       new Notice(msg, 8000);
     });
     this.server.listen(port, '127.0.0.1', () => {
@@ -578,19 +578,19 @@ export default class JaspidianPlugin extends Plugin {
 
     new Notice(`Saved: ${finalPath.split('/').pop()}`, 3000);
 
-    // Surface attachment failures — broken images in the note are usually
+    // Surface attachment failures - broken images in the note are usually
     // explained by the extension failing to fetch the CDN URL before sending.
     const missingAttachments = (note.attachments || []).filter((a) => !a.data).length;
     if (missingAttachments > 0) {
       new Notice(
-        `⚠ ${missingAttachments} image${missingAttachments === 1 ? '' : 's'} couldn't be downloaded — check the extension service-worker console for "[jaspidian] image fetch" errors.`,
+        `⚠ ${missingAttachments} image${missingAttachments === 1 ? '' : 's'} couldn't be downloaded - check the extension service-worker console for "[jaspidian] image fetch" errors.`,
         8000,
       );
     }
 
     // Auto-prettify if configured
     if (this.settings.autoPrettify && this.settings.aiProvider !== 'none') {
-      // Fire and forget — don't block the response
+      // Fire and forget - don't block the response
       this.prettifyNote(markdown).then(async (prettified) => {
         if (!prettified) return;
         const file = this.app.vault.getAbstractFileByPath(finalPath);
@@ -638,7 +638,7 @@ export default class JaspidianPlugin extends Plugin {
           await this.app.vault.createFolder(current);
         } catch (err) {
           // Another concurrent export may have created the folder between our
-          // exists() check and createFolder() — that is fine, just continue.
+          // exists() check and createFolder() - that is fine, just continue.
           const msg = err instanceof Error ? err.message : String(err);
           if (!msg.includes('Folder already exists')) throw err;
         }
@@ -698,11 +698,11 @@ class FBSettingTab extends PluginSettingTab {
 
     if (this.plugin.settings.ollamaFormat === 'openai') {
       const resp = await requestUrl({ url: `${base}/v1/models`, headers });
-      if (resp.status >= 400) throw new Error(`HTTP ${resp.status} from ${base}/v1/models — ${resp.text.slice(0, 120)}`);
+      if (resp.status >= 400) throw new Error(`HTTP ${resp.status} from ${base}/v1/models - ${resp.text.slice(0, 120)}`);
       return ((resp.json.data || []) as {id: string}[]).map(m => m.id).filter(Boolean).sort();
     } else {
       const resp = await requestUrl({ url: `${base}/api/tags`, headers });
-      if (resp.status >= 400) throw new Error(`HTTP ${resp.status} from ${base}/api/tags — ${resp.text.slice(0, 120)}`);
+      if (resp.status >= 400) throw new Error(`HTTP ${resp.status} from ${base}/api/tags - ${resp.text.slice(0, 120)}`);
       return ((resp.json.models || []) as {name: string}[]).map(m => m.name).filter(Boolean).sort();
     }
   }
@@ -806,7 +806,7 @@ class FBSettingTab extends PluginSettingTab {
     }
 
     if (this.plugin.settings.aiProvider === 'ollama') {
-      // ── Endpoint format (first — affects which URLs the fetch button tries) ──
+      // ── Endpoint format (first - affects which URLs the fetch button tries) ──
       new Setting(containerEl)
         .setName('Endpoint format')
         .setDesc('Native → /api/chat + /api/tags (self-hosted Ollama). OpenAI → /v1/chat/completions + /v1/models (most cloud providers).')
@@ -848,7 +848,7 @@ class FBSettingTab extends PluginSettingTab {
         });
       });
 
-      // ── Model — dropdown when fetched, text input otherwise ────────────────
+      // ── Model - dropdown when fetched, text input otherwise ────────────────
       if (this.availableModels.length > 0) {
         new Setting(containerEl)
           .setName('Model')
@@ -868,7 +868,7 @@ class FBSettingTab extends PluginSettingTab {
       } else {
         new Setting(containerEl)
           .setName('Model')
-          .setDesc('Type a model name — or click "Fetch models" above to pick from a list.')
+          .setDesc('Type a model name - or click "Fetch models" above to pick from a list.')
           .addText(text => text
             .setPlaceholder('llama3.2')
             .setValue(this.plugin.settings.ollamaModel)

@@ -100,7 +100,7 @@ export async function scan(env: Env, opts: ScanOptions): Promise<ScanResult> {
       // Resolve context before expansion (context headers may change after expansion)
       const context = resolveContext(doc, postEl, scenario, url);
 
-      // Expand (only if requested — for deferred-expansion scans all flags are false)
+      // Expand (only if requested - for deferred-expansion scans all flags are false)
       let expansionStats = _emptyExpansionStats();
       if (opts.expand.body || opts.expand.comments || opts.expand.replies) {
         expansionStats = await expandPost(
@@ -119,7 +119,7 @@ export async function scan(env: Env, opts: ScanOptions): Promise<ScanResult> {
 
       // Extract
       const post = extractPost(postEl, context, expansionStats, env);
-      // Deduplicate by postId — skip if we already have a post with this ID.
+      // Deduplicate by postId - skip if we already have a post with this ID.
       // Only applies when postId is a real FB identifier (not the counter fallback).
       if (post.postId && elementMap.has(post.postId)) {
         continue;
@@ -145,7 +145,7 @@ export async function scan(env: Env, opts: ScanOptions): Promise<ScanResult> {
       candidatesCount: candidates.length,
       classifiedCount: classified.length,
       rejectionReasons: _buildRejectionReasons(candidates.length, classified.length),
-      topCandidates: classified.slice(0, 3),
+      topCandidates: classified.slice(0, 3).map(({ el: _el, ...rest }) => rest),
     },
   };
 
@@ -186,7 +186,7 @@ export async function expandAndExtractPosts(
 
     if (!postEl || !postEl.isConnected) {
       notFound.push(postId);
-      warnings.push(`Post ${postId} not found in DOM — page may have changed since last scan`);
+      warnings.push(`Post ${postId} not found in DOM - page may have changed since last scan`);
       continue;
     }
 

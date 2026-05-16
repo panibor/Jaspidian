@@ -4,7 +4,7 @@
  *
  * Layout:
  *   > [!note]+  top-level comment from others  (blue, expanded)
- *   > [!tip]+   top-level comment from OP      (green, expanded — stands out)
+ *   > [!tip]+   top-level comment from OP      (green, expanded - stands out)
  *   > > [!quote]+  reply from others           (gray, inside parent)
  *   > > [!tip]+    reply from OP               (green, inside parent)
  *

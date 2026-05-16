@@ -29,7 +29,7 @@ export function detectScenario(doc: Document, url: string): Scenario {
     return 'unknown';
   }
 
-  // 1. Photo viewer — but only when NOT opened as a modal over a feed.
+  // 1. Photo viewer - but only when NOT opened as a modal over a feed.
   // When the user clicks a photo on the feed, Facebook changes the URL to /photo/?fbid=…
   // while the feed posts remain in the DOM behind the overlay.  Detecting as photoViewer
   // in that case would cause the scanner to look only at the modal panel and miss every
@@ -38,10 +38,10 @@ export function detectScenario(doc: Document, url: string): Scenario {
   if (/\/photo\/|\/photo\.php/.test(pathname) || pathname.includes('/reel/')) {
     const feedInDom = doc.querySelector('[role="feed"]') || doc.querySelector('[aria-posinset]');
     if (!feedInDom) return 'photoViewer';
-    // else: photo modal over feed — fall through to feed detection below
+    // else: photo modal over feed - fall through to feed detection below
   }
 
-  // 2. Comments modal — dialog element present with role=dialog
+  // 2. Comments modal - dialog element present with role=dialog
   const dialog = doc.querySelector('[role="dialog"]');
   if (dialog) {
     const hasCommentInput = dialog.querySelector('[aria-label*="comment" i], [aria-label*="תגובות" i]');

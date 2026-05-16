@@ -97,7 +97,7 @@ export function extractTimestamp(postEl: Element, baseUrl: string, now?: string)
  *
  * Facebook's aria-label usually carries the full timestamp even when the
  * visible text is relative, so step 1 succeeds for most posts. The relative
- * fallback exists for layouts where only the short text is available — that
+ * fallback exists for layouts where only the short text is available - that
  * way the `date` field reflects when the post was *published*, not when it
  * was captured.
  */
@@ -120,7 +120,7 @@ function _resolvePostedAt(ariaLabel: string, text: string, now: Date): string | 
     }
   }
 
-  // 2b. Absolute date substring — Hebrew months
+  // 2b. Absolute date substring - Hebrew months
   const HE_MONTHS: Record<string, number> = {
     ינואר: 1, פברואר: 2, מרץ: 3, אפריל: 4, מאי: 5, יוני: 6,
     יולי: 7, אוגוסט: 8, ספטמבר: 9, אוקטובר: 10, נובמבר: 11, דצמבר: 12,
@@ -135,7 +135,7 @@ function _resolvePostedAt(ariaLabel: string, text: string, now: Date): string | 
     }
   }
 
-  // 3. Relative time — English
+  // 3. Relative time - English
   const RELATIVE = /(\d+)\s*(second|minute|hour|day|week|month|year|sec|min|hr|wk|mo|yr)s?\b/i;
   const UNIT_MS: Record<string, number> = {
     second: 1_000, sec: 1_000,
@@ -156,7 +156,7 @@ function _resolvePostedAt(ariaLabel: string, text: string, now: Date): string | 
     }
   }
 
-  // 3b. Relative time — Hebrew (e.g. "‏4 שעות", "דקה אחת")
+  // 3b. Relative time - Hebrew (e.g. "‏4 שעות", "דקה אחת")
   const HE_UNITS: Array<[RegExp, number]> = [
     [/(\d+)\s*שניות?|שנייה\s+אחת/, 1_000],
     [/(\d+)\s*דקות?|דקה\s+אחת/, 60_000],
@@ -176,7 +176,7 @@ function _resolvePostedAt(ariaLabel: string, text: string, now: Date): string | 
     }
   }
 
-  // 3c. Relative time — Arabic (e.g. "منذ 3 ساعات")
+  // 3c. Relative time - Arabic (e.g. "منذ 3 ساعات")
   const AR_UNITS: Array<[RegExp, number]> = [
     [/(\d+)\s*ثواني?|ثانية/, 1_000],
     [/(\d+)\s*دقائق?|دقيقة/, 60_000],

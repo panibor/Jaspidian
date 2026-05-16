@@ -1,4 +1,4 @@
-# Jaspidian — Privacy Policy
+# Jaspidian - Privacy Policy
 
 **Last updated: 2026-05-16**
 
@@ -30,9 +30,9 @@ Nothing in either store is ever transmitted anywhere.
 
 ## What Jaspidian transmits
 
-Jaspidian transmits exactly one thing: the extracted post content (Markdown + image data) from the browser extension to the Obsidian plugin running inside Obsidian, over **`127.0.0.1:37123`** — a loopback address. The data never leaves your computer.
+Jaspidian transmits exactly one thing: the extracted post content (Markdown + image data) from the browser extension to the Obsidian plugin running inside Obsidian, over **`127.0.0.1:37123`** - a loopback address. The data never leaves your computer.
 
-Jaspidian also fetches image files from Facebook's CDN (`*.fbcdn.net`, `*.scontent.*`) so it can download attachments into your vault. These requests use your existing Facebook session — exactly the same requests your browser would make when displaying the page.
+Jaspidian also fetches image files from Facebook's CDN (`*.fbcdn.net`, `*.scontent.*`) so it can download attachments into your vault. These requests use your existing Facebook session - exactly the same requests your browser would make when displaying the page.
 
 ## Third-party services
 
@@ -46,7 +46,7 @@ The Obsidian plugin contains an optional feature that uses an AI model to clean 
 2. Pick a provider: **OpenRouter** (a cloud service) or **Ollama** (typically a local server, but it accepts any URL you type)
 3. Enter an API key or endpoint URL
 
-If — and only if — you enable this feature, the plugin will send the **content of the note you are saving** to the provider you configured:
+If - and only if - you enable this feature, the plugin will send the **content of the note you are saving** to the provider you configured:
 
 - **OpenRouter (cloud):** notes are sent over HTTPS to `https://openrouter.ai/api/v1/chat/completions`. OpenRouter is operated by a third party with its own privacy policy.
 - **Ollama (typically local):** notes are sent to whatever URL you enter. If you point Ollama at `http://localhost:11434`, the data stays on your machine. If you point it at a remote server, the data goes there.

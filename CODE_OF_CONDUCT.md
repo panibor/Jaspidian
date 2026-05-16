@@ -6,10 +6,10 @@ Jaspidian is a small personal-use project. The expectations here are simple:
 
 When opening an issue, commenting on a pull request, or interacting with anyone in this repository:
 
-- Stay on topic — bug reports, feature ideas, technical questions
-- Be patient — this is maintained by one person in their spare time
-- Be respectful — no harassment, name-calling, doxxing, slurs, or personal attacks
-- Be honest — don't misrepresent bugs, exaggerate severity, or post fake reports
+- Stay on topic - bug reports, feature ideas, technical questions
+- Be patient - this is maintained by one person in their spare time
+- Be respectful - no harassment, name-calling, doxxing, slurs, or personal attacks
+- Be honest - don't misrepresent bugs, exaggerate severity, or post fake reports
 
 ## Protect other people's privacy
 
@@ -32,7 +32,7 @@ The following are not acceptable in any interaction here:
 
 ## Enforcement
 
-The maintainer can — at their sole discretion and without prior notice — edit, hide, close, or delete any comment, issue, or pull request; and block any user from further interaction with the repository.
+The maintainer can - at their sole discretion and without prior notice - edit, hide, close, or delete any comment, issue, or pull request; and block any user from further interaction with the repository.
 
 There is no appeal process. This is a personal project, not a democracy.
 

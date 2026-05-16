@@ -7,7 +7,7 @@ body:
     attributes:
       value: |
         Jaspidian is a personal-use tool. Features that primarily enable commercial use,
-        mass collection, or redistribution are out of scope and will be closed —
+        mass collection, or redistribution are out of scope and will be closed -
         see [CONTRIBUTING.md](https://github.com/panibor/Jaspidian/blob/main/CONTRIBUTING.md).
 
   - type: textarea

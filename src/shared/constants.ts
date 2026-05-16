@@ -1,5 +1,5 @@
 /**
- * v2 — Constants: expander caps, label dictionaries, selector patterns, defaults.
+ * v2 - Constants: expander caps, label dictionaries, selector patterns, defaults.
  */
 
 /**
@@ -100,21 +100,23 @@ export const MIN_IMAGE_PX = 80;
  * Message bus message kinds.
  */
 export const MESSAGE_KIND = {
+  /** popup → background or background → content: scan posts on the active tab. */
   SCAN_REQUEST: 'SCAN_REQUEST',
-  SCAN_RESPONSE: 'SCAN_RESPONSE',
-  DEEP_SCAN_REQUEST: 'DEEP_SCAN_REQUEST',
-  /** background → content: open modal for one post, scan it, return post data */
+  /** background → content: open modal for one post, scan it, return post data. */
   MODAL_SCAN_POST: 'MODAL_SCAN_POST',
-  /** popup → background: scan + export one post via modal, return ExportResultItemV2 */
-  MODAL_EXPORT_ONE: 'MODAL_EXPORT_ONE',
-  EXPORT_REQUEST: 'EXPORT_REQUEST',
-  EXPORT_RESPONSE: 'EXPORT_RESPONSE',
+  /** popup → background: start a batch export job; background drives the loop. */
+  EXPORT_BATCH_START: 'EXPORT_BATCH_START',
+  /** popup → background: get current/last batch job status. */
+  EXPORT_BATCH_STATUS: 'EXPORT_BATCH_STATUS',
+  /** popup → background: clear last-finished job state so the next popup open shows idle. */
+  EXPORT_BATCH_ACK: 'EXPORT_BATCH_ACK',
+  /** background → broadcast: per-post progress while a batch job runs. */
+  EXPORT_PROGRESS: 'EXPORT_PROGRESS',
+  /** background → content: expand stored posts and return full data (called inside the batch loop). */
   EXPAND_AND_EXTRACT_REQUEST: 'EXPAND_AND_EXTRACT_REQUEST',
-  EXPAND_AND_EXTRACT_RESPONSE: 'EXPAND_AND_EXTRACT_RESPONSE',
+  /** popup → background: probe whether the Obsidian plugin is reachable. */
   VAULT_PROBE_REQUEST: 'VAULT_PROBE_REQUEST',
   VAULT_PROBE_RESPONSE: 'VAULT_PROBE_RESPONSE',
-  REQUEST_VAULT_INFO: 'REQUEST_VAULT_INFO',
-  VAULT_INFO_RESPONSE: 'VAULT_INFO_RESPONSE',
 } as const;
 
 /**

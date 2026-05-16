@@ -28,7 +28,7 @@ export function findCandidates(doc: Document, scenario: Scenario): Candidate[] {
 
   // Highest confidence: aria-posinset (feed items are indexed).
   // Exception: on permalink / profile / page scenarios, [aria-posinset] elements that sit
-  // inside a [role="feed"] are sidebar "Suggested posts" widgets — not the main content.
+  // inside a [role="feed"] are sidebar "Suggested posts" widgets - not the main content.
   // Including them causes the scanner to return two "posts" for a single permalink post.
   const isNonFeedScenario =
     scenario === 'permalink' ||
@@ -40,9 +40,9 @@ export function findCandidates(doc: Document, scenario: Scenario): Candidate[] {
     add(el, 'aria-posinset');
   }
 
-  // Universal: [role="article"] — the primary Facebook post container.
+  // Universal: [role="article"] - the primary Facebook post container.
   // On non-feed scenarios (permalink, profile, page) also skip articles inside
-  // [role="feed"] — those are sidebar "Suggested posts", same as the aria-posinset filter.
+  // [role="feed"] - those are sidebar "Suggested posts", same as the aria-posinset filter.
   for (const el of doc.querySelectorAll('[role="article"]')) {
     // Skip articles nested inside another article (those are comments)
     if (el.parentElement?.closest('[role="article"]')) continue;
@@ -54,7 +54,7 @@ export function findCandidates(doc: Document, scenario: Scenario): Candidate[] {
   // Feed / group page: direct children of [role="feed"] or feed containers
   if (scenario === 'feed' || scenario === 'groupPage' || scenario === 'unknown') {
     for (const el of doc.querySelectorAll('[role="feed"] > div, [data-pagelet*="FeedUnit"] > div')) {
-      // Skip wrapper elements that CONTAIN aria-posinset posts — they're feed containers,
+      // Skip wrapper elements that CONTAIN aria-posinset posts - they're feed containers,
       // not individual posts. Adding them causes the dedup to eat all real post candidates.
       if (el.children.length > 0 && !el.querySelector('[aria-posinset]')) {
         add(el, 'feed-child');
@@ -84,7 +84,7 @@ export function findCandidates(doc: Document, scenario: Scenario): Candidate[] {
     if (inDialog) {
       add(inDialog, 'photo-viewer-panel');
     } else {
-      // Case B: direct photo permalink URL (/photo/?fbid=…) — no dialog wrapper.
+      // Case B: direct photo permalink URL (/photo/?fbid=…) - no dialog wrapper.
       // The right-side panel with author/text/comments sits at page level.
       for (const comp of doc.querySelectorAll('[role="complementary"]')) {
         add(comp, 'photo-viewer-panel');
@@ -98,7 +98,7 @@ export function findCandidates(doc: Document, scenario: Scenario): Candidate[] {
     }
   }
 
-  // Data pagelet fallback — skip if the pagelet is a container holding aria-posinset posts
+  // Data pagelet fallback - skip if the pagelet is a container holding aria-posinset posts
   for (const el of doc.querySelectorAll('[data-pagelet*="FeedUnit"], [data-pagelet*="GroupsFeed"]')) {
     if (!el.querySelector('[aria-posinset]')) add(el, 'pagelet');
   }

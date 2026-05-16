@@ -26,7 +26,7 @@ export function handleScanRequest(
       return;
     }
 
-    // Content script not there — inject it then retry
+    // Content script not there - inject it then retry
     try {
       await chrome.scripting.executeScript({
         target: { tabId },
@@ -35,7 +35,7 @@ export function handleScanRequest(
       // Small wait for script to register its listener
       await new Promise<void>((r) => setTimeout(r, 200));
     } catch {
-      sendResponse({ ok: false, error: 'Could not inject content script — please reload the Facebook tab and try again.' });
+      sendResponse({ ok: false, error: 'Could not inject content script - please reload the Facebook tab and try again.' });
       return;
     }
 
@@ -44,12 +44,12 @@ export function handleScanRequest(
       sendResponse({ ...secondTry, tabId });
       return;
     }
-    // Still failing — surface the real Chrome error so the user can act on it
+    // Still failing - surface the real Chrome error so the user can act on it
     const diagError = await _lastSendError(tabId, message);
     sendResponse({
       ok: false,
       error: diagError
-        ? `Scan error: ${diagError} — try reloading the Facebook tab.`
+        ? `Scan error: ${diagError} - try reloading the Facebook tab.`
         : 'Content script did not respond. Please reload the Facebook tab and try again.',
     });
   });

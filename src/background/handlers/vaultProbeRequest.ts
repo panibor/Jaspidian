@@ -13,11 +13,11 @@ export function handleVaultProbeRequest(
 ): boolean {
   const baseUrl = `http://${OBSIDIAN_PLUGIN_CONFIG.host}:${OBSIDIAN_PLUGIN_CONFIG.port}`;
 
-  // Quick fetch helper — 5 s timeout so the popup doesn't hang
+  // Quick fetch helper - 5 s timeout so the popup doesn't hang
   const quickFetch = (path: string): Promise<Record<string, unknown>> =>
     fetch(`${baseUrl}${path}`, { signal: AbortSignal.timeout(5_000) }).then((r) => r.json());
 
-  // Hit /health first — it requires no auth token regardless of plugin settings.
+  // Hit /health first - it requires no auth token regardless of plugin settings.
   // Only if health passes do we also try /vault/info for the vault name.
   quickFetch('/health')
     .then(async (health) => {
@@ -33,7 +33,7 @@ export function handleVaultProbeRequest(
           vaultRoot: (info.vaultRoot as string) || undefined,
         });
       } catch {
-        // Health passed but vault/info needs a token — still show as connected
+        // Health passed but vault/info needs a token - still show as connected
         sendResponse({ ok: true });
       }
     })

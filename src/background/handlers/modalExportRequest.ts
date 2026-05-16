@@ -1,12 +1,10 @@
 /**
- * src-v2/background/handlers/modalExportRequest.ts
- * Handles MODAL_EXPORT_ONE: opens the post's permalink in a hidden background tab,
- * runs a full scan there, closes the tab, then renders + writes the note to the vault.
- * The popup calls this once per post, driving the sequential loop itself so it
- * can update a progress counter after each response.
+ * exportOnePost: opens the post's permalink in a hidden background tab, runs a
+ * full scan there, closes the tab, renders Markdown, and writes the note to the
+ * vault via the Obsidian plugin. Called once per post by the background batch
+ * loop (handlers/exportBatch.ts).
  */
 import type {
-  RuntimeMessageV2,
   ExtractedFacebookPostV2,
   ExportResultItemV2,
   ScanResponse,
@@ -23,8 +21,7 @@ import {
   MESSAGE_KIND,
 } from '../../shared/constants';
 
-interface ModalExportOneMessage extends RuntimeMessageV2 {
-  tabId: number;
+export interface ModalExportOneInput {
   postId: string;
   /** Post permalink URL (from initial scan). Used to open a background tab for full scan. */
   permalink: string;
@@ -32,30 +29,28 @@ interface ModalExportOneMessage extends RuntimeMessageV2 {
   vaultPattern?: string;
   attachmentsFolder?: string;
   pluginToken?: string;
-  vaultPath?: string;
-  vaultName?: string;
 }
 
 export interface ModalExportOneResponse {
   ok: boolean;
   result?: ExportResultItemV2;
-  /** Title extracted from the post — lets the popup show which post just finished. */
+  /** Title extracted from the post - lets the popup show which post just finished. */
   title?: string;
   error?: string;
 }
 
-export function handleModalExportOne(
-  message: RuntimeMessageV2,
-  sendResponse: (r: ModalExportOneResponse) => void
-): boolean {
-  const msg = message as ModalExportOneMessage;
+/**
+ * Core per-post export logic - exported so the batch handler can call it
+ * directly without going through chrome.runtime messaging.
+ */
+export async function exportOnePost(msg: ModalExportOneInput): Promise<ModalExportOneResponse> {
   const commentMode = msg.commentMode || (DEFAULT_COMMENT_MODE as CommentMode);
   const vaultPattern = msg.vaultPattern || DEFAULT_VAULT_PATTERN;
   const attachmentsFolder = msg.attachmentsFolder || DEFAULT_ATTACHMENTS_FOLDER;
   const baseUrl = `http://${OBSIDIAN_PLUGIN_CONFIG.host}:${OBSIDIAN_PLUGIN_CONFIG.port}`;
   const capturedAt = new Date().toISOString();
 
-  const run = async (): Promise<ModalExportOneResponse> => {
+  try {
     if (!msg.permalink) {
       return {
         ok: false,
@@ -155,20 +150,16 @@ export function handleModalExportOne(
       error: `Obsidian plugin error: ${pluginErr}`,
     };
     return { ok: false, result, error: pluginErr };
-  };
-
-  run()
-    .then(sendResponse)
-    .catch((err) => sendResponse({
+  } catch (err) {
+    return {
       ok: false,
       result: {
         postId: msg.postId, status: 'failed', warnings: [],
         error: err instanceof Error ? err.message : String(err),
       },
       error: err instanceof Error ? err.message : String(err),
-    }));
-
-  return true; // async
+    };
+  }
 }
 
 // ---------------------------------------------------------------------------
@@ -203,7 +194,7 @@ function _canonicalPermalink(permalink: string): string {
         : `https://www.facebook.com/permalink.php?story_fbid=${storyFbid}`;
     }
 
-    // Already canonical (has /permalink/ or /posts/) — just strip tracking params
+    // Already canonical (has /permalink/ or /posts/) - just strip tracking params
     const clean = new URL(permalink);
     for (const key of [...clean.searchParams.keys()]) {
       if (key.startsWith('__')) clean.searchParams.delete(key);
@@ -246,7 +237,7 @@ async function _scanViaPermalinkTab(
     // Give Facebook's React renderer time to paint the content
     await _sleep(1500);
 
-    // Scroll the background tab to trigger Facebook's intersection observers —
+    // Scroll the background tab to trigger Facebook's intersection observers -
     // comments and lazy-loaded sections only render when they enter the viewport.
     // Even in an inactive tab, programmatic scroll fires IntersectionObserver callbacks.
     try {
@@ -263,7 +254,7 @@ async function _scanViaPermalinkTab(
       });
       await _sleep(500);
     } catch {
-      // scripting injection may fail on restricted pages — continue regardless
+      // scripting injection may fail on restricted pages - continue regardless
     }
 
     // Send SCAN_REQUEST with permalink-appropriate caps (lower than feed defaults)

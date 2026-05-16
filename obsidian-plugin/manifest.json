@@ -1,7 +1,7 @@
 {
   "id": "jaspidian",
   "name": "Jaspidian",
-  "version": "1.0.0",
+  "version": "1.1.1",
   "minAppVersion": "1.4.0",
   "description": "Receives notes from the Jaspidian Chrome extension and saves them directly into this vault.",
   "author": "Jaspidian",

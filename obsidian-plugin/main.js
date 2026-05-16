@@ -58,17 +58,17 @@ Transform the raw captured note into a clean, structured, beautiful Obsidian not
 
 The English templates below are shown with English labels. If the target language is English, use the labels VERBATIM. If the target language is anything else, TRANSLATE only the English label words shown in the templates (Source, Posted by, Group, Page, Date, Link, "Open the post on Facebook", Summary, Media, Comments, "No comments on this post.", Product, Details, Price) into natural {LANG_NAME}. Do NOT change Markdown punctuation, Obsidian callout syntax, the \`>\` prefix on callout lines, the \`**bold**\` markup, frontmatter keys, URLs, dates, or numbers.
 
-Never translate the post body itself \u2014 preserve the author's original wording exactly.
+Never translate the post body itself - preserve the author's original wording exactly.
 
-Never emit literal placeholder text like \`{Source}\` or \`{LANG_NAME}\` in the output \u2014 those are meta-references inside this prompt, not output tokens.
+Never emit literal placeholder text like \`{Source}\` or \`{LANG_NAME}\` in the output - those are meta-references inside this prompt, not output tokens.
 
 ## Transformation rules
 
 ### Frontmatter
 - Keep these existing fields exactly as they appear: title, author, permalink, group, page, profile, date.
-- The \`author\`, \`group\`, \`page\`, and \`profile\` fields are already markdown links in the form \`[Name](url)\` \u2014 preserve them verbatim. Do not split them into separate \`*_url\` fields.
+- The \`author\`, \`group\`, \`page\`, and \`profile\` fields are already markdown links in the form \`[Name](url)\` - preserve them verbatim. Do not split them into separate \`*_url\` fields.
 - Add \`source: "Facebook"\` if not present.
-- Do NOT add \`type\`, \`lang\`, \`language\`, \`author_url\`, \`group_url\`, \`page_url\`, \`profile_url\`, \`cssclasses\` \u2014 these fields must not appear in the output frontmatter.
+- Do NOT add \`type\`, \`lang\`, \`language\`, \`author_url\`, \`group_url\`, \`page_url\`, \`profile_url\`, \`cssclasses\` - these fields must not appear in the output frontmatter.
 - Infer and add if present: location, status (in {LANG_NAME})
 - For \`tags\`: replace any existing tags (or add if absent) with 4\u20138 relevant lowercase tags in {LANG_NAME} (hyphens between words, no spaces, no emoji). Use YAML list format:
 \`\`\`
@@ -79,7 +79,7 @@ tags:
 - Strip tracking params from ALL urls (__cft__[...], __tn__=..., hoisted_section_header_type=...)
 
 ### Source callout
-Replace the raw "*Posted by [Name](url) in [Group](url) \xB7 time \xB7 [link](url)*" line with a callout. The English template \u2014 EVERY line MUST begin with \`> \` exactly:
+Replace the raw "*Posted by [Name](url) in [Group](url) \xB7 time \xB7 [link](url)*" line with a callout. The English template - EVERY line MUST begin with \`> \` exactly:
 \`\`\`
 > [!info] Source
 > **Posted by:** [Name](clean_url)
@@ -90,7 +90,7 @@ Replace the raw "*Posted by [Name](url) in [Group](url) \xB7 time \xB7 [link](ur
 Use "Group" if the post is in a group, "Page" if on a page, "Profile" if on a personal profile. The Posted-by name and URL come from the \`author\` frontmatter field (which is already a \`[Name](url)\` markdown link). Translate the English label words to {LANG_NAME} when {LANG_NAME} is not English.
 
 ### Summary
-Immediately after the source callout, add a Summary section with a [!summary] callout listing 3\u20136 key facts (who/what/where/price range/etc.). English template \u2014 every line MUST begin with \`> \`:
+Immediately after the source callout, add a Summary section with a [!summary] callout listing 3\u20136 key facts (who/what/where/price range/etc.). English template - every line MUST begin with \`> \`:
 \`\`\`
 ## Summary
 
@@ -99,18 +99,18 @@ Immediately after the source callout, add a Summary section with a [!summary] ca
 > - Key fact two
 > - Key fact three
 \`\`\`
-Translate "Summary" (used twice \u2014 heading and callout title) and the bullet contents to {LANG_NAME} when {LANG_NAME} is not English.
+Translate "Summary" (used twice - heading and callout title) and the bullet contents to {LANG_NAME} when {LANG_NAME} is not English.
 
 ### Content structure
-- Remove the raw "## Post" heading \u2014 the content follows naturally after the Summary section
+- Remove the raw "## Post" heading - the content follows naturally after the Summary section
 - Convert unordered item/price lists into clean markdown tables. English column headers: Product / Details / Price. Price column always right-aligned (---:). Keep prices in the post's original currency and format.
 - Split long product lists into logical ### sub-headings
 - Preserve all text; do not summarise or omit product details
 
 ### Sections
 - \`## Media\` keeps that heading in English when {LANG_NAME} is English; translate "Media" otherwise.
-- \`## Comments\` likewise \u2014 keep "Comments" in English when {LANG_NAME} is English, translate otherwise. If the section is empty, write a single line below it: \`No comments on this post.\` (translated to {LANG_NAME} when not English).
-- Keep every image embed exactly as-is, with a blank line between each image. This includes both \`![[Facebook/_attachments/...]]\` Obsidian wikilinks and \`![alt](url)\` standard markdown embeds \u2014 preserve the form, the alt text, and the URL verbatim. Never strip the leading \`!\`, never replace a URL with a placeholder, never convert one form into the other.
+- \`## Comments\` likewise - keep "Comments" in English when {LANG_NAME} is English, translate otherwise. If the section is empty, write a single line below it: \`No comments on this post.\` (translated to {LANG_NAME} when not English).
+- Keep every image embed exactly as-is, with a blank line between each image. This includes both \`![[Facebook/_attachments/...]]\` Obsidian wikilinks and \`![alt](url)\` standard markdown embeds - preserve the form, the alt text, and the URL verbatim. Never strip the leading \`!\`, never replace a URL with a placeholder, never convert one form into the other.
 
 ### Comment callouts (preserving structure)
 Comments arrive as one Obsidian callout each. The exact syntax that MUST be preserved on every comment header line:
@@ -122,7 +122,7 @@ Comments arrive as one Obsidian callout each. The exact syntax that MUST be pres
 Rules:
 - \`[!note]+\` is a single token: there is NO space between \`]\` and \`+\`. Never write \`[!note] +\`.
 - Every line of the callout (header AND body lines) MUST start with \`> \`. Do not strip the \`>\` prefix.
-- Do not translate or rewrite comment body text \u2014 keep it verbatim.
+- Do not translate or rewrite comment body text - keep it verbatim.
 - Replies use \`[!example]+ \u21B3 \` with one extra \`> \` of nesting per depth.
 
 ### Output
@@ -403,7 +403,7 @@ ${preview}`, 0);
     this.server = http.createServer((req, res) => this.handleRequest(req, res));
     this.server.on("error", (err) => {
       this._serverStatus = "error";
-      const msg = err.code === "EADDRINUSE" ? `Jaspidian: Port ${port} is in use. Change the port in plugin settings.` : `Jaspidian: Server error \u2014 ${err.message}`;
+      const msg = err.code === "EADDRINUSE" ? `Jaspidian: Port ${port} is in use. Change the port in plugin settings.` : `Jaspidian: Server error - ${err.message}`;
       new import_obsidian.Notice(msg, 8e3);
     });
     this.server.listen(port, "127.0.0.1", () => {
@@ -546,7 +546,7 @@ ${preview}`, 0);
     const missingAttachments = (note.attachments || []).filter((a) => !a.data).length;
     if (missingAttachments > 0) {
       new import_obsidian.Notice(
-        `\u26A0 ${missingAttachments} image${missingAttachments === 1 ? "" : "s"} couldn't be downloaded \u2014 check the extension service-worker console for "[jaspidian] image fetch" errors.`,
+        `\u26A0 ${missingAttachments} image${missingAttachments === 1 ? "" : "s"} couldn't be downloaded - check the extension service-worker console for "[jaspidian] image fetch" errors.`,
         8e3
       );
     }
@@ -645,11 +645,11 @@ var FBSettingTab = class extends import_obsidian.PluginSettingTab {
     if (this.plugin.settings.ollamaApiKey) headers["Authorization"] = `Bearer ${this.plugin.settings.ollamaApiKey}`;
     if (this.plugin.settings.ollamaFormat === "openai") {
       const resp = await (0, import_obsidian.requestUrl)({ url: `${base}/v1/models`, headers });
-      if (resp.status >= 400) throw new Error(`HTTP ${resp.status} from ${base}/v1/models \u2014 ${resp.text.slice(0, 120)}`);
+      if (resp.status >= 400) throw new Error(`HTTP ${resp.status} from ${base}/v1/models - ${resp.text.slice(0, 120)}`);
       return (resp.json.data || []).map((m) => m.id).filter(Boolean).sort();
     } else {
       const resp = await (0, import_obsidian.requestUrl)({ url: `${base}/api/tags`, headers });
-      if (resp.status >= 400) throw new Error(`HTTP ${resp.status} from ${base}/api/tags \u2014 ${resp.text.slice(0, 120)}`);
+      if (resp.status >= 400) throw new Error(`HTTP ${resp.status} from ${base}/api/tags - ${resp.text.slice(0, 120)}`);
       return (resp.json.models || []).map((m) => m.name).filter(Boolean).sort();
     }
   }
@@ -742,7 +742,7 @@ var FBSettingTab = class extends import_obsidian.PluginSettingTab {
           });
         });
       } else {
-        new import_obsidian.Setting(containerEl).setName("Model").setDesc('Type a model name \u2014 or click "Fetch models" above to pick from a list.').addText((text) => text.setPlaceholder("llama3.2").setValue(this.plugin.settings.ollamaModel).onChange(async (value) => {
+        new import_obsidian.Setting(containerEl).setName("Model").setDesc('Type a model name - or click "Fetch models" above to pick from a list.').addText((text) => text.setPlaceholder("llama3.2").setValue(this.plugin.settings.ollamaModel).onChange(async (value) => {
           this.plugin.settings.ollamaModel = value.trim();
           await this.plugin.saveSettings();
         }));

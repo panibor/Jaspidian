@@ -76,7 +76,7 @@ function _isRejected(img: Element, src: string): boolean {
 }
 
 function _bestResUrl(img: Element, fallback: string): string {
-  // 1. Wrapping anchor — only useful if it points directly at the CDN image.
+  // 1. Wrapping anchor - only useful if it points directly at the CDN image.
   //    A /photo/?fbid=… anchor is a Facebook *webpage*, not an image, so we
   //    must NOT return it as the image URL or the note will embed HTML.
   const anchor = img.closest('a[href]');
@@ -87,7 +87,7 @@ function _bestResUrl(img: Element, fallback: string): string {
     }
   }
 
-  // 2. srcset — pick widest descriptor
+  // 2. srcset - pick widest descriptor
   const srcset = img.getAttribute('srcset') || '';
   if (srcset) {
     const best = _parseSrcsetBest(srcset);

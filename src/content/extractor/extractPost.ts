@@ -40,7 +40,7 @@ export function extractPost(
   const authorInfo = extractAuthor(postEl, bodyEl, baseUrl);
   if (!authorInfo.name) warnings.push('extractPost: author not found');
 
-  // Timestamp — pass env.now() so relative dates ("2 hours ago") resolve to a
+  // Timestamp - pass env.now() so relative dates ("2 hours ago") resolve to a
   // real ISO timestamp rather than the capture time.
   const tsInfo = extractTimestamp(postEl, baseUrl, env.now());
   if (!tsInfo.text && !tsInfo.permalink) warnings.push('extractPost: timestamp not found');
@@ -69,7 +69,7 @@ export function extractPost(
   // Shared post
   const sharedPost = extractSharedPost(articleEl);
 
-  // Comments — start with postEl scope, then widen if nothing found.
+  // Comments - start with postEl scope, then widen if nothing found.
   // In photo viewer the selected candidate is the inner [role="article"] but comments
   // sit as siblings within the enclosing [role="complementary"] panel, not inside the
   // article. Climbing to complementary (or dialog for modal photo viewer) fixes that
@@ -87,7 +87,7 @@ export function extractPost(
   // Language / direction
   const bodyText = bodyInfo.text;
   const direction = detectDirection(bodyText);
-  // Note labels follow the post body script only — never the Facebook UI language.
+  // Note labels follow the post body script only - never the Facebook UI language.
   // Latin-script posts (Czech, English, French, etc.) always get English labels.
   // Non-Latin scripts (Hebrew, Arabic, Cyrillic, etc.) get their own labels.
   const language = detectLanguage(bodyText);
@@ -101,7 +101,7 @@ export function extractPost(
   // Post ID from the in-post timestamp permalink.
   const postId = _extractPostId(tsInfo.permalink || '');
 
-  // Stable ID — if we can't derive one, use a session-scoped counter + timestamp.
+  // Stable ID - if we can't derive one, use a session-scoped counter + timestamp.
   const id = postId || `post-${++_idCounter}-${Date.now()}`;
 
   return {
@@ -158,7 +158,7 @@ function _extractPostId(permalink: string): string {
   // multi_permalinks=123456
   const mpl = permalink.match(/multi_permalinks=(\d+)/);
   if (mpl) return mpl[1];
-  // /posts/<id>  — numeric (legacy) or pfbid (modern encoded) format
+  // /posts/<id>  - numeric (legacy) or pfbid (modern encoded) format
   const posts = permalink.match(/\/posts\/([\w-]+)/);
   if (posts) return posts[1];
   // story_fbid=123456

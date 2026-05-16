@@ -46,7 +46,7 @@ export function renderNote(post: ExtractedFacebookPostV2, opts: RenderOptions): 
     unicode: false,
   });
 
-  // Always use the fully-expanded per-post folder — never the raw base dir.
+  // Always use the fully-expanded per-post folder - never the raw base dir.
   const attachmentFolder = filenames.attachmentFolder;
 
   // Render the three sections

@@ -100,7 +100,7 @@ export async function openAndScanViaModal(
  * Priority: comment-count text link > "Comment" action button.
  */
 function _findCommentsTrigger(postEl: Element): HTMLElement | null {
-  // Strategy 1: comment count link — "45 Comments", "45 תגובות", "45 تعليق"
+  // Strategy 1: comment count link - "45 Comments", "45 תגובות", "45 تعليق"
   const countRe = /\d+\s*(comments?|תגובות?|تعليقات?)/i;
   for (const el of postEl.querySelectorAll<HTMLElement>('a, [role="link"], span[dir]')) {
     if (el === postEl) continue;
