@@ -1,5 +1,9 @@
 # Changelog
 
+## v1.1.3 - 2026-10-05
+
+No code changes from v1.1.1. Version bumped to resubmit to AMO on the listed channel (v1.1.1 and v1.1.2 were signed for self-distribution only, and AMO never reuses a version number).
+
 ## v1.1.1 - 2026-05-16
 
 Same as v1.1.0 below. Version bumped only because AMO permanently reserves any version number that has ever been submitted, and v1.1.0 had been used during the pre-release validation cycle.
